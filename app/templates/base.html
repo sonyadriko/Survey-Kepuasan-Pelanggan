@@ -6,6 +6,84 @@
     <title>{% block title %}Kuesioner - Customer Satisfaction Survey{% endblock %}</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
     <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        /* Airbnb Design Tokens - Base Styles */
+        :root {
+            --palette-bg-primary-core: #ff385c;
+            --palette-bg-tertiary-core: #e00b41;
+            --palette-text-primary-error: #c13515;
+            --palette-text-secondary: #6a6a6a;
+            --palette-text-primary: #222222;
+            --palette-border-gray: #c1c1c1;
+            --palette-light-surface: #f2f2f2;
+            --palette-white: #ffffff;
+            --shadow-card: rgba(0, 0, 0, 0.02) 0px 0px 0px 1px, rgba(0, 0, 0, 0.04) 0px 2px 6px, rgba(0, 0, 0, 0.1) 0px 4px 8px;
+            --shadow-hover: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+            --radius-standard: 8px;
+            --radius-badge: 14px;
+            --radius-card: 20px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-2xl: 48px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Airbnb Cereal VF', 'Circular', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.43;
+            color: var(--palette-text-primary);
+            background: var(--palette-white);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1128px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0 var(--space-lg);
+            height: 48px;
+            font-size: 1rem;
+            font-weight: 500;
+            line-height: 1.25;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: var(--radius-standard);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--palette-bg-primary-core);
+            color: var(--palette-white);
+        }
+
+        .btn-primary:hover {
+            background: var(--palette-bg-tertiary-core);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .text-muted {
+            color: var(--palette-text-secondary);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+    </style>
     {% block extra_css %}{% endblock %}
 </head>
 <body>

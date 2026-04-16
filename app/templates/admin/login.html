@@ -7,65 +7,282 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
     <link rel="stylesheet" href="/static/css/style.css">
     <style>
-        body {
-            background: linear-gradient(135deg, #4a90a4 0%, #2c5f6f 100%);
-            min-height: 100vh;
+        :root {
+            --palette-bg-primary-core: #ff385c;
+            --palette-bg-tertiary-core: #e00b41;
+            --palette-text-primary: #222222;
+            --palette-text-secondary: #6a6a6a;
+            --palette-border-gray: #c1c1c1;
+            --palette-border-focus: #222222;
+            --palette-light-surface: #f2f2f2;
+            --palette-white: #ffffff;
+            --palette-text-placeholder: #929292;
+            --shadow-card: rgba(0, 0, 0, 0.02) 0px 0px 0px 1px, rgba(0, 0, 0, 0.04) 0px 2px 6px, rgba(0, 0, 0, 0.1) 0px 4px 8px;
+            --shadow-hover: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+            --radius-standard: 8px;
+            --radius-card: 20px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-2xl: 48px;
         }
 
-        .login-page {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Airbnb Cereal VF', 'Circular', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--palette-white);
             min-height: 100vh;
+            color: var(--palette-text-primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 1rem;
+            padding: var(--space-md);
+        }
+
+        .login-page {
+            width: 100%;
+            max-width: 440px;
         }
 
         .login-card {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 400px;
-            padding: 2.5rem;
+            background: var(--palette-white);
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-card);
+            padding: var(--space-2xl) var(--space-xl);
+            animation: fadeInUp 0.4s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .login-header {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: var(--space-2xl);
+        }
+
+        .login-logo {
+            font-size: 3rem;
+            margin-bottom: var(--space-md);
         }
 
         .login-header h1 {
             margin: 0;
-            color: #2c5f6f;
+            color: var(--palette-bg-primary-core);
             font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.44px;
+            margin-bottom: var(--space-sm);
         }
 
         .login-header p {
-            color: #6c757d;
-            margin-top: 0.5rem;
+            color: var(--palette-text-secondary);
+            font-size: 0.88rem;
+            line-height: 1.43;
+        }
+
+        .form-group {
+            margin-bottom: var(--space-lg);
+            position: relative;
+        }
+
+        .form-group:last-child {
+            margin-bottom: var(--space-xl);
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: var(--space-sm);
+            font-weight: 600;
+            color: var(--palette-text-primary);
+            font-size: 0.88rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: var(--space-md);
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--palette-text-secondary);
+            font-size: 1.13rem;
+            pointer-events: none;
+            transition: color 0.2s ease;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: var(--space-sm) var(--space-md);
+            padding-left: 48px;
+            border: 1px solid var(--palette-border-gray);
+            border-radius: var(--radius-standard);
+            font-size: 1rem;
+            height: 52px;
+            background: var(--palette-white);
+            transition: all 0.2s ease;
+            color: var(--palette-text-primary);
+        }
+
+        .form-control::placeholder {
+            color: var(--palette-text-placeholder);
+            opacity: 1;
+        }
+
+        .form-control:hover {
+            border-color: var(--palette-text-primary);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--palette-border-focus);
+            box-shadow: 0 0 0 2px var(--palette-border-focus);
+        }
+
+        .form-control:focus + .input-icon,
+        .input-wrapper:focus-within .input-icon {
+            color: var(--palette-bg-primary-core);
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            height: 52px;
+            padding: 0 var(--space-lg);
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: var(--radius-standard);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--palette-bg-primary-core) 0%, var(--palette-bg-tertiary-core) 100%);
+            color: var(--palette-white);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            background: var(--palette-text-primary);
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .btn-loader {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto;
+        }
+
+        .btn.loading .btn-text {
+            display: none;
+        }
+
+        .btn.loading .btn-loader {
+            display: block;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         .alert {
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            font-size: 0.875rem;
+            padding: var(--space-md);
+            border-radius: var(--radius-standard);
+            margin-bottom: var(--space-lg);
+            font-size: 0.88rem;
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .alert-danger {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+            background: #fff0f1;
+            color: #c13515;
+            border: 1px solid rgba(193, 53, 21, 0.2);
+        }
+
+        .alert-icon {
+            flex-shrink: 0;
+            font-size: 1.13rem;
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: var(--space-lg);
+            padding-top: var(--space-lg);
+            border-top: 1px solid var(--palette-light-surface);
+        }
+
+        .login-footer a {
+            color: var(--palette-text-primary);
+            font-size: 0.88rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .login-footer a:hover {
+            color: var(--palette-bg-primary-core);
         }
 
         @media (max-width: 480px) {
             .login-card {
-                padding: 1.5rem;
-                border-radius: 12px;
+                padding: var(--space-xl) var(--space-lg);
+                border-radius: var(--radius-badge);
             }
 
             .login-header {
-                margin-bottom: 1.5rem;
+                margin-bottom: var(--space-xl);
+            }
+
+            .login-logo {
+                font-size: 2.5rem;
             }
 
             .login-header h1 {
@@ -73,18 +290,22 @@
             }
 
             .login-header p {
-                font-size: 0.875rem;
+                font-size: 0.81rem;
             }
 
-            .btn {
-                padding: 0.875rem 1rem;
-                font-size: 1rem;
+            .btn,
+            .form-control {
+                height: 48px;
             }
         }
 
         @media (max-width: 360px) {
             .login-card {
-                padding: 1.25rem;
+                padding: var(--space-lg);
+            }
+
+            .login-logo {
+                font-size: 2rem;
             }
 
             .login-header h1 {
@@ -97,25 +318,40 @@
     <div class="login-page">
         <div class="login-card">
             <div class="login-header">
-                <h1>Kuesioner</h1>
-                <p>Admin Login</p>
+                <div class="login-logo">📋</div>
+                <h1>Welcome back</h1>
+                <p>Sign in to access your admin dashboard</p>
             </div>
 
-            <div id="errorMessage" class="alert alert-danger" style="display: none;"></div>
+            <div id="errorMessage" class="alert alert-danger" style="display: none;">
+                <span class="alert-icon">⚠️</span>
+                <span class="alert-message"></span>
+            </div>
 
-            <form id="loginForm" onsubmit="handleLogin(event)">
+            <form id="loginForm" onsubmit="handleLogin(event)" novalidate>
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" id="username" name="username" class="form-control" required autofocus>
+                    <div class="input-wrapper">
+                        <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required autocomplete="username">
+                        <span class="input-icon">👤</span>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" class="form-control" required>
+                    <div class="input-wrapper">
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required autocomplete="current-password">
+                        <span class="input-icon">🔒</span>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-full" id="loginBtn">
-                    Login
+                <button type="submit" class="btn btn-primary" id="loginBtn">
+                    <span class="btn-text">Sign in</span>
+                    <span class="btn-loader"></span>
                 </button>
             </form>
+
+            <div class="login-footer">
+                <a href="/">← Back to home</a>
+            </div>
         </div>
     </div>
 
@@ -126,16 +362,46 @@
             window.location.href = '/admin/dashboard.html';
         }
 
+        // Form validation
+        const form = document.getElementById('loginForm');
+        const inputs = form.querySelectorAll('.form-control');
+
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.value.trim()) {
+                    this.style.borderColor = '';
+                }
+            });
+
+            input.addEventListener('input', function() {
+                const formGroup = this.closest('.form-group');
+                formGroup.classList.remove('has-error');
+            });
+        });
+
         async function handleLogin(event) {
             event.preventDefault();
             const errorMessage = document.getElementById('errorMessage');
             const loginBtn = document.getElementById('loginBtn');
 
-            const username = document.getElementById('username').value;
+            const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value;
 
+            // Validation
+            if (!username) {
+                showError('Please enter your username');
+                document.getElementById('username').focus();
+                return;
+            }
+            if (!password) {
+                showError('Please enter your password');
+                document.getElementById('password').focus();
+                return;
+            }
+
+            // Show loading state
+            loginBtn.classList.add('loading');
             loginBtn.disabled = true;
-            loginBtn.textContent = 'Logging in...';
             errorMessage.style.display = 'none';
 
             try {
@@ -154,18 +420,30 @@
                     localStorage.setItem('adminUsername', data.username);
                     window.location.href = '/admin/dashboard.html';
                 } else {
-                    errorMessage.textContent = data.detail || 'Login failed';
-                    errorMessage.style.display = 'block';
+                    showError(data.detail || 'Invalid username or password');
+                    loginBtn.classList.remove('loading');
                     loginBtn.disabled = false;
-                    loginBtn.textContent = 'Login';
                 }
             } catch (error) {
-                errorMessage.textContent = 'Network error. Please try again.';
-                errorMessage.style.display = 'block';
+                showError('Network error. Please check your connection and try again.');
+                loginBtn.classList.remove('loading');
                 loginBtn.disabled = false;
-                loginBtn.textContent = 'Login';
             }
         }
+
+        function showError(message) {
+            const errorMessage = document.getElementById('errorMessage');
+            const alertMessage = errorMessage.querySelector('.alert-message');
+            alertMessage.textContent = message;
+            errorMessage.style.display = 'flex';
+        }
+
+        // Auto-focus first input on page load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('username')?.focus();
+            }, 100);
+        });
     </script>
 </body>
 </html>

@@ -2,13 +2,62 @@
 
 {% block title %}Server Error - Kuesioner{% endblock %}
 
+{% block extra_css %}
+<style>
+    .error-page {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .error-content {
+        max-width: 500px;
+        padding: var(--space-xl);
+    }
+
+    .error-code {
+        font-size: 6rem;
+        font-weight: 700;
+        color: var(--palette-text-primary-error);
+        line-height: 1;
+        margin-bottom: var(--space-md);
+        letter-spacing: -4px;
+    }
+
+    .error-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--palette-text-primary);
+        margin-bottom: var(--space-md);
+    }
+
+    .error-description {
+        color: var(--palette-text-secondary);
+        font-size: 1rem;
+        line-height: 1.43;
+        margin-bottom: var(--space-xl);
+    }
+
+    .error-content .btn {
+        display: inline-block;
+        text-decoration: none;
+    }
+</style>
+{% endblock %}
+
 {% block body %}
 <div class="container">
-    <div class="empty-state">
-        <h1 style="font-size: 4rem; margin-bottom: 1rem;">500</h1>
-        <h2>Server Error</h2>
-        <p>Something went wrong on our end. Please try again later.</p>
-        <a href="/" class="btn btn-primary" style="margin-top: 1rem;">Go Home</a>
+    <div class="error-page">
+        <div class="error-content">
+            <div class="error-code">500</div>
+            <h1 class="error-title">Server Error</h1>
+            <p class="error-description">
+                Something went wrong on our end. Please try again later.
+            </p>
+            <a href="/" class="btn btn-primary">Go Home</a>
+        </div>
     </div>
 </div>
 {% endblock %}

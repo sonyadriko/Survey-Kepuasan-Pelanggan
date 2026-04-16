@@ -7,16 +7,46 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
     <link rel="stylesheet" href="/static/css/style.css">
     <style>
+        /* Airbnb Design Tokens */
+        :root {
+            --palette-bg-primary-core: #ff385c;
+            --palette-bg-tertiary-core: #e00b41;
+            --palette-text-primary-error: #c13515;
+            --palette-text-secondary: #6a6a6a;
+            --palette-text-primary: #222222;
+            --palette-border-gray: #c1c1c1;
+            --palette-light-surface: #f2f2f2;
+            --palette-white: #ffffff;
+            --shadow-card: rgba(0, 0, 0, 0.02) 0px 0px 0px 1px, rgba(0, 0, 0, 0.04) 0px 2px 6px, rgba(0, 0, 0, 0.1) 0px 4px 8px;
+            --shadow-hover: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+            --radius-standard: 8px;
+            --radius-badge: 14px;
+            --radius-card: 20px;
+            --radius-circle: 50%;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+        }
+
         /* Mobile Responsive Styles */
         .mobile-menu-btn {
             display: none;
-            background: none;
+            background: var(--palette-light-surface);
             border: none;
             font-size: 1.5rem;
             cursor: pointer;
-            padding: 0.5rem;
-            margin-right: 1rem;
-            color: white;
+            padding: var(--space-sm);
+            margin-right: var(--space-md);
+            color: var(--palette-text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-circle);
+            transition: all 0.2s ease;
+        }
+
+        .mobile-menu-btn:hover {
+            background: #e5e5e5;
         }
 
         .sidebar-overlay {
@@ -30,10 +60,58 @@
             z-index: 998;
         }
 
+        /* Admin Body */
+        .admin-body {
+            background: var(--palette-white);
+        }
+
+        /* Admin Sidebar */
+        .admin-sidebar {
+            background: var(--palette-white);
+            border-right: 1px solid var(--palette-border-gray);
+        }
+
+        .sidebar-header h2 {
+            color: var(--palette-bg-primary-core);
+        }
+
+        /* Admin Header */
+        .admin-header {
+            background: var(--palette-white);
+            border-bottom: 1px solid var(--palette-border-gray);
+        }
+
+        .admin-header h1 {
+            color: var(--palette-text-primary);
+        }
+
+        /* Toast */
+        .toast {
+            background: #00a699;
+            border-radius: var(--radius-badge);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .toast-error {
+            background: var(--palette-text-primary-error);
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 997;
+        }
+
         /* Tablet & Below */
         @media (max-width: 992px) {
             .admin-sidebar {
-                width: 200px;
+                width: 240px;
             }
 
             .stats-grid {
@@ -44,7 +122,9 @@
         /* Mobile */
         @media (max-width: 768px) {
             .mobile-menu-btn {
-                display: block;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
             .admin-sidebar {
@@ -75,8 +155,8 @@
 
             .admin-header {
                 flex-wrap: wrap;
-                padding: 1rem;
-                gap: 1rem;
+                padding: var(--space-md);
+                gap: var(--space-md);
             }
 
             .admin-header h1 {
@@ -86,7 +166,7 @@
             .header-actions {
                 width: 100%;
                 display: flex;
-                gap: 0.5rem;
+                gap: var(--space-sm);
             }
 
             .header-actions .btn {
@@ -94,16 +174,16 @@
             }
 
             .admin-content {
-                padding: 1rem;
+                padding: var(--space-md);
             }
 
             .stats-grid {
                 grid-template-columns: 1fr;
-                gap: 1rem;
+                gap: var(--space-md);
             }
 
             .stat-card {
-                padding: 1rem;
+                padding: var(--space-md);
             }
 
             .stat-icon {
@@ -118,11 +198,11 @@
 
             /* Card responsive */
             .card {
-                border-radius: 8px;
+                border-radius: var(--radius-badge);
             }
 
             .card-header {
-                padding: 1rem;
+                padding: var(--space-md);
             }
 
             .card-header h3 {
@@ -130,7 +210,7 @@
             }
 
             .card-body {
-                padding: 1rem;
+                padding: var(--space-md);
             }
 
             /* Table responsive */
@@ -140,13 +220,13 @@
             }
 
             .table {
-                font-size: 0.875rem;
+                font-size: 0.88rem;
                 white-space: nowrap;
             }
 
             .table th,
             .table td {
-                padding: 0.5rem;
+                padding: var(--space-sm);
             }
 
             /* Hide less important table columns on mobile */
@@ -157,54 +237,58 @@
 
             /* Modal responsive */
             .modal-content {
-                margin: 1rem;
+                margin: var(--space-md);
                 max-width: calc(100% - 2rem);
                 max-height: calc(100vh - 2rem);
-                border-radius: 16px;
+                border-radius: var(--radius-badge);
             }
 
             .modal-header {
-                padding: 1.5rem 1.75rem;
+                padding: var(--space-lg);
             }
 
             .modal-header h2 {
-                font-size: 1.25rem;
+                font-size: 1.13rem;
             }
 
             .modal-body {
-                padding: 1.75rem;
+                padding: var(--space-lg);
             }
 
             .modal-footer {
-                padding: 1.5rem 1.75rem;
+                padding: var(--space-lg);
                 flex-wrap: wrap;
             }
 
             .modal-footer .btn {
                 flex: 1;
                 min-width: 80px;
+                font-size: 0.88rem;
             }
 
             /* Button adjustments */
             .btn {
-                font-size: 0.875rem;
-                padding: 0.625rem 1rem;
+                font-size: 0.88rem;
+                padding: 0 var(--space-md);
+                height: 40px;
             }
 
             .btn-sm {
-                padding: 0.375rem 0.625rem;
-                font-size: 0.75rem;
+                padding: 0 var(--space-sm);
+                font-size: 0.81rem;
+                height: 32px;
             }
 
             /* Badge responsive */
             .badge {
-                font-size: 0.625rem;
-                padding: 0.2rem 0.5rem;
+                font-size: 0.63rem;
+                padding: 2px var(--space-sm);
             }
 
             /* Form responsive */
             .form-control {
                 font-size: 1rem;
+                height: 44px;
             }
 
             textarea.form-control {
@@ -221,13 +305,13 @@
             .stat-card {
                 flex-direction: row;
                 text-align: left;
-                padding: 0.875rem;
+                padding: var(--space-sm);
             }
 
             .stat-icon {
                 width: 40px;
                 height: 40px;
-                font-size: 1.125rem;
+                font-size: 1.13rem;
             }
 
             .stat-value {
@@ -235,19 +319,19 @@
             }
 
             .chart-container h3 {
-                font-size: 0.875rem;
+                font-size: 0.88rem;
             }
 
             .question-result-header {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 0.5rem;
+                gap: var(--space-sm);
             }
 
             .rating-stats {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 0.75rem;
+                gap: var(--space-md);
             }
 
             .rating-bars {
@@ -256,51 +340,53 @@
 
             .rating-bar-item {
                 flex-wrap: wrap;
-                gap: 0.25rem;
+                gap: var(--space-xs);
             }
 
             .star-label {
                 width: 30px;
-                font-size: 0.875rem;
+                font-size: 0.88rem;
             }
 
             .bar-count {
                 width: 30px;
-                font-size: 0.875rem;
+                font-size: 0.88rem;
             }
 
             .question-item {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 0.75rem;
+                gap: var(--space-sm);
             }
 
             .question-actions {
                 width: 100%;
                 display: flex;
                 flex-wrap: wrap;
-                gap: 0.25rem;
+                gap: var(--space-xs);
             }
 
             .question-actions .btn {
                 flex: 1;
                 min-width: 60px;
                 font-size: 0.75rem;
-                padding: 0.375rem 0.5rem;
+                padding: 0 var(--space-sm);
+                height: 32px;
             }
 
             /* Action buttons in table */
             .action-buttons {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 0.25rem;
+                gap: var(--space-xs);
             }
 
             .action-buttons .btn {
                 flex: 1;
                 min-width: 55px;
                 font-size: 0.7rem;
-                padding: 0.25rem 0.375rem;
+                padding: 0 var(--space-sm);
+                height: 28px;
             }
 
             /* Hide more columns on small mobile */
@@ -348,7 +434,7 @@
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
     <!-- Modal Overlay for closing modals when clicking outside -->
-    <div id="modalOverlay" class="modal-overlay" style="display: none;" onclick="closeAllModals()"></div>
+    <div id="modalOverlay" class="modal-overlay" onclick="closeAllModals()"></div>
 
     <div class="admin-layout">
         <!-- Sidebar -->
@@ -371,7 +457,9 @@
             <header class="admin-header">
                 <div style="display: flex; align-items: center; width: 100%;">
                     <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Toggle menu">
-                        ☰
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12h18M3 6h18M3 18h18"/>
+                        </svg>
                     </button>
                     <h1>{% block page_title %}Dashboard{% endblock %}</h1>
                 </div>

@@ -5,42 +5,112 @@
 {% block extra_css %}
 <style>
     .survey-form {
-        max-width: 600px;
+        max-width: 640px;
         margin: 0 auto;
+        padding: var(--space-xl) 0;
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 4px;
+        background: var(--palette-light-surface);
+        border-radius: 2px;
+        margin-bottom: var(--space-xl);
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--palette-bg-primary-core), #ff6b8a);
+        border-radius: 2px;
+        transition: width 0.3s ease;
+        width: 0%;
+    }
+
+    .progress-text {
+        text-align: center;
+        font-size: 0.75rem;
+        color: var(--palette-text-secondary);
+        margin-top: var(--space-sm);
+        margin-bottom: var(--space-md);
     }
 
     .form-intro {
         text-align: center;
-        margin-bottom: 2rem;
+        margin-bottom: var(--space-xl);
+        padding: 0 var(--space-md);
+    }
+
+    .form-intro-icon {
+        font-size: 3rem;
+        margin-bottom: var(--space-md);
+    }
+
+    .form-intro h1 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--palette-text-primary);
+        margin-bottom: var(--space-sm);
+        letter-spacing: -0.3px;
+    }
+
+    .form-intro p {
+        color: var(--palette-text-secondary);
+        font-size: 0.94rem;
+        line-height: 1.5;
     }
 
     .question-block {
-        background: #fff;
-        border-radius: 8px;
-        padding: 1.5rem;
-        margin-bottom: 1.5rem;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        background: var(--palette-white);
+        border-radius: var(--radius-card);
+        padding: var(--space-xl);
+        margin-bottom: var(--space-lg);
+        box-shadow: var(--shadow-card);
+        transition: all 0.2s ease;
+        border: 1px solid transparent;
+    }
+
+    .question-block:hover {
+        box-shadow: var(--shadow-hover);
+    }
+
+    .question-block.required {
+        border-left: 3px solid var(--palette-bg-primary-core);
+    }
+
+    .question-header {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--space-sm);
+        margin-bottom: var(--space-md);
     }
 
     .question-number {
-        color: #6c757d;
-        font-size: 0.875rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, rgba(255, 56, 92, 0.1), rgba(255, 56, 92, 0.05));
+        color: var(--palette-bg-primary-core);
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: var(--radius-badge);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        flex-shrink: 0;
     }
 
     .question-text {
-        font-size: 1.125rem;
+        font-size: 1.06rem;
         font-weight: 500;
-        margin-bottom: 1rem;
+        color: var(--palette-text-primary);
+        line-height: 1.43;
+        flex: 1;
     }
 
-    /* Star Rating */
+    /* Star Rating - Enhanced Airbnb Style */
     .star-rating {
         display: flex;
         flex-direction: row-reverse;
         justify-content: flex-end;
-        gap: 0.25rem;
+        gap: 6px;
     }
 
     .star-rating input {
@@ -50,128 +120,433 @@
     .star-rating label {
         cursor: pointer;
         font-size: 2rem;
-        color: #ddd;
-        transition: color 0.2s;
+        color: var(--palette-border-gray);
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        line-height: 1;
+        filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+    }
+
+    .star-rating label:hover {
+        transform: scale(1.2);
+    }
+
+    .star-rating label:active {
+        transform: scale(1.1);
     }
 
     .star-rating label:hover,
     .star-rating label:hover ~ label,
     .star-rating input:checked ~ label {
-        color: #ffc107;
+        color: var(--palette-bg-primary-core);
     }
 
-    .star-rating label:hover ~ label:last-child,
-    .star-rating input:checked ~ label:last-child {
-        color: #ddd;
+    .star-rating input:checked + label {
+        animation: starPop 0.3s ease;
+    }
+
+    @keyframes starPop {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.3); }
+        100% { transform: scale(1.1); }
     }
 
     .rating-labels {
         display: flex;
         justify-content: space-between;
-        margin-top: 0.5rem;
-        font-size: 0.75rem;
-        color: #6c757d;
+        margin-top: var(--space-md);
+        font-size: 0.81rem;
+        color: var(--palette-text-secondary);
     }
 
-    /* Text Area */
+    .rating-hints {
+        display: flex;
+        justify-content: space-between;
+        margin-top: var(--space-sm);
+        font-size: 0.75rem;
+        color: var(--palette-text-secondary);
+        opacity: 0.8;
+    }
+
+    /* Text Area - Airbnb Style */
+    .textarea-wrapper {
+        position: relative;
+    }
+
     textarea.form-control {
         width: 100%;
-        min-height: 100px;
-        padding: 0.75rem;
-        border: 1px solid #ced4da;
-        border-radius: 4px;
+        min-height: 120px;
+        padding: var(--space-md);
+        padding-right: var(--space-xl);
+        border: 1px solid var(--palette-border-gray);
+        border-radius: var(--radius-standard);
         font-size: 1rem;
         font-family: inherit;
         resize: vertical;
+        background: var(--palette-white);
+        line-height: 1.5;
+        transition: all 0.2s ease;
+    }
+
+    textarea.form-control:hover {
+        border-color: var(--palette-text-primary);
     }
 
     textarea.form-control:focus {
         outline: none;
-        border-color: #4a90a4;
-        box-shadow: 0 0 0 3px rgba(74, 144, 164, 0.1);
+        border-color: var(--palette-text-primary);
+        box-shadow: 0 0 0 3px rgba(34, 34, 34, 0.1);
     }
 
-    /* Respondent Info */
+    textarea.form-control::placeholder {
+        color: var(--palette-text-placeholder);
+    }
+
+    .char-counter {
+        position: absolute;
+        bottom: var(--space-sm);
+        right: var(--space-md);
+        font-size: 0.75rem;
+        color: var(--palette-text-secondary);
+    }
+
+    /* Respondent Info - Airbnb Style Card */
     .respondent-info {
-        background: #f8f9fa;
-        border-radius: 8px;
-        padding: 1.5rem;
-        margin-bottom: 2rem;
+        background: linear-gradient(135deg, rgba(255, 56, 92, 0.05) 0%, rgba(255, 255, 255, 1) 100%);
+        border-radius: var(--radius-card);
+        padding: var(--space-xl);
+        margin-bottom: var(--space-xl);
+        border: 1px solid rgba(255, 56, 92, 0.1);
+    }
+
+    .respondent-info-header {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        margin-bottom: var(--space-lg);
+    }
+
+    .respondent-info-icon {
+        font-size: 1.5rem;
     }
 
     .respondent-info h3 {
-        margin-top: 0;
-        margin-bottom: 1rem;
-        font-size: 1.125rem;
+        margin: 0;
+        font-size: 1.06rem;
+        font-weight: 600;
+        color: var(--palette-text-primary);
+    }
+
+    .respondent-info p {
+        margin: var(--space-xs) 0 0 0;
+        font-size: 0.81rem;
+        color: var(--palette-text-secondary);
     }
 
     .form-group {
-        margin-bottom: 1rem;
+        margin-bottom: var(--space-md);
+    }
+
+    .form-group:last-child {
+        margin-bottom: 0;
     }
 
     .form-group label {
         display: block;
-        margin-bottom: 0.5rem;
-        font-weight: 500;
+        margin-bottom: var(--space-sm);
+        font-weight: 600;
+        color: var(--palette-text-primary);
+        font-size: 0.88rem;
+    }
+
+    .form-group label .optional {
+        font-weight: 400;
+        color: var(--palette-text-secondary);
+        margin-left: 4px;
+    }
+
+    .input-wrapper {
+        position: relative;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: var(--space-md);
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--palette-text-secondary);
+        font-size: 1.13rem;
+        pointer-events: none;
+        transition: color 0.2s ease;
     }
 
     .form-control {
         width: 100%;
-        padding: 0.75rem;
-        border: 1px solid #ced4da;
-        border-radius: 4px;
+        padding: var(--space-sm) var(--space-md);
+        border: 1px solid var(--palette-border-gray);
+        border-radius: var(--radius-standard);
         font-size: 1rem;
+        height: 52px;
+        background: var(--palette-white);
+        transition: all 0.2s ease;
     }
 
+    .form-control.has-icon {
+        padding-left: 48px;
+    }
+
+    .form-control:hover {
+        border-color: var(--palette-text-primary);
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--palette-text-primary);
+        box-shadow: 0 0 0 3px rgba(34, 34, 34, 0.1);
+    }
+
+    .form-control:focus ~ .input-icon {
+        color: var(--palette-bg-primary-core);
+    }
+
+    .form-control::placeholder {
+        color: var(--palette-text-placeholder);
+    }
+
+    /* Submit Button - Airbnb Style */
     .btn-submit {
         width: 100%;
-        padding: 1rem;
-        font-size: 1.125rem;
+        height: 56px;
+        padding: 0 var(--space-xl);
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: var(--radius-standard);
+        background: linear-gradient(135deg, var(--palette-bg-primary-core) 0%, var(--palette-bg-tertiary-core) 100%);
+        color: var(--palette-white);
+        border: none;
+        cursor: pointer;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-sm);
+        box-shadow: 0 2px 8px rgba(255, 56, 92, 0.3);
     }
 
-    .error-message {
-        background: #f8d7da;
-        color: #721c24;
-        padding: 0.75rem;
-        border-radius: 4px;
-        margin-bottom: 1rem;
+    .btn-submit:hover:not(:disabled) {
+        box-shadow: 0 4px 16px rgba(255, 56, 92, 0.4);
+        transform: translateY(-2px);
     }
+
+    .btn-submit:active:not(:disabled) {
+        transform: translateY(0);
+    }
+
+    .btn-submit:disabled {
+        background: var(--palette-text-primary);
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+    .btn-loader {
+        display: none;
+        width: 20px;
+        height: 20px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+
+    .btn-submit.loading .btn-text {
+        display: none;
+    }
+
+    .btn-submit.loading .btn-loader {
+        display: block;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    /* Error Message - Airbnb Style */
+    .error-message {
+        background: #fff0f1;
+        color: var(--palette-text-primary-error);
+        padding: var(--space-md);
+        border-radius: var(--radius-badge);
+        margin-bottom: var(--space-lg);
+        border: 1px solid rgba(193, 53, 21, 0.2);
+        font-size: 0.88rem;
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Success Message - Airbnb Style */
+    #successMessage {
+        text-align: center;
+        padding: var(--space-2xl) var(--space-md);
+        animation: fadeInScale 0.5s ease;
+    }
+
+    @keyframes fadeInScale {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    #successMessage .success-icon {
+        font-size: 5rem;
+        margin-bottom: var(--space-md);
+        display: inline-block;
+        animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    @keyframes bounceIn {
+        0% {
+            transform: scale(0);
+            opacity: 0;
+        }
+        50% {
+            transform: scale(1.2);
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    #successMessage h2 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--palette-text-primary);
+        margin-bottom: var(--space-sm);
+    }
+
+    #successMessage p {
+        color: var(--palette-text-secondary);
+        font-size: 0.94rem;
+        margin-bottom: var(--space-xl);
+        line-height: 1.5;
+    }
+
+    #successMessage .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-sm);
+    }
+
+    @media (max-width: 550px) {
+        .survey-form {
+            padding: var(--space-md) 0;
+        }
+
+        .form-intro-icon {
+            font-size: 2.5rem;
+        }
+
+        .question-block,
+        .respondent-info {
+            padding: var(--space-lg);
+            border-radius: var(--radius-badge);
+        }
+
+        .form-intro h1 {
+            font-size: 1.38rem;
+        }
+
+        .question-header {
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .question-number {
+        align-self: flex-start;
+    }
+
+    .star-rating label {
+        font-size: 1.75rem;
+    }
+}
 </style>
 {% endblock %}
 
 {% block body %}
 <div class="container">
     <div class="survey-form">
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <p class="progress-text" id="progressText">0% complete</p>
+
         <div class="form-intro">
+            <div class="form-intro-icon">✨</div>
             <h1>{{ questionnaire.title }}</h1>
             {% if questionnaire.description %}
             <p>{{ questionnaire.description }}</p>
             {% endif %}
-            <p class="text-muted">Please answer all questions. Your feedback is important to us!</p>
+            <p style="margin-top: var(--space-md);">Your honest feedback helps us serve you better.</p>
         </div>
 
-        <form id="surveyForm" onsubmit="submitSurvey(event)">
-            <div id="errorMessage" class="error-message" style="display: none;"></div>
+        <form id="surveyForm" onsubmit="submitSurvey(event)" novalidate>
+            <div id="errorMessage" class="error-message" style="display: none;">
+                <span>⚠️</span>
+                <span id="errorText"></span>
+            </div>
 
             <!-- Optional Respondent Info -->
             <div class="respondent-info">
-                <h3>Your Information (Optional)</h3>
-                <div class="form-group">
-                    <label for="respondentName">Name</label>
-                    <input type="text" id="respondentName" name="respondentName" class="form-control" placeholder="Your name (optional)">
+                <div class="respondent-info-header">
+                    <span class="respondent-info-icon">👤</span>
+                    <div>
+                        <h3>Your Information</h3>
+                        <p>Optional - helps us follow up if needed</p>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label for="respondentContact">Contact (Email/Phone)</label>
-                    <input type="text" id="respondentContact" name="respondentContact" class="form-control" placeholder="Email or phone (optional)">
+                    <label for="respondentName">Name <span class="optional">(optional)</span></label>
+                    <div class="input-wrapper">
+                        <input type="text" id="respondentName" name="respondentName" class="form-control has-icon" placeholder="Enter your name">
+                        <span class="input-icon">👤</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="respondentContact">Email or Phone <span class="optional">(optional)</span></label>
+                    <div class="input-wrapper">
+                        <input type="text" id="respondentContact" name="respondentContact" class="form-control has-icon" placeholder="email@example.com or +62...">
+                        <span class="input-icon">📧</span>
+                    </div>
                 </div>
             </div>
 
             <!-- Questions -->
             <input type="hidden" id="questionnaireId" value="{{ questionnaire.id }}">
             {% for question in questions %}
-            <div class="question-block" data-question-id="{{ question.id }}" data-question-type="{{ question.question_type }}">
-                <div class="question-number">Question {{ loop.index }}</div>
-                <div class="question-text">{{ question.question_text }}</div>
+            <div class="question-block required" data-question-id="{{ question.id }}" data-question-type="{{ question.question_type }}">
+                <div class="question-header">
+                    <span class="question-number">Q{{ loop.index }}</span>
+                    <span class="question-text">{{ question.question_text }}</span>
+                </div>
 
                 {% if question.question_type == 'rating' %}
                 <div class="star-rating">
@@ -191,30 +566,85 @@
                     <label for="q{{ question.id }}_1" title="Very Dissatisfied">★</label>
                 </div>
                 <div class="rating-labels">
-                    <span>Very Dissatisfied</span>
-                    <span>Very Satisfied</span>
+                    <span>Poor</span>
+                    <span>Excellent</span>
+                </div>
+                <div class="rating-hints">
+                    <span>😞 Very Dissatisfied</span>
+                    <span>😐 Neutral</span>
+                    <span>🤩 Very Satisfied</span>
                 </div>
                 {% else %}
-                <textarea class="form-control" name="q{{ question.id }}_text" placeholder="Enter your answer here..."></textarea>
+                <div class="textarea-wrapper">
+                    <textarea class="form-control" name="q{{ question.id }}_text" placeholder="Share your thoughts here..." maxlength="500"></textarea>
+                    <span class="char-counter">0/500</span>
+                </div>
                 {% endif %}
             </div>
             {% endfor %}
 
-            <button type="submit" class="btn btn-primary btn-submit" id="submitBtn">
-                Submit Survey
+            <button type="submit" class="btn-submit" id="submitBtn">
+                <span class="btn-text">Submit Survey</span>
+                <span class="btn-loader"></span>
             </button>
         </form>
 
-        <div id="successMessage" style="display: none; text-align: center; padding: 2rem;">
-            <div style="font-size: 4rem; margin-bottom: 1rem;">✓</div>
+        <div id="successMessage" style="display: none;">
+            <div class="success-icon">🎉</div>
             <h2>Thank You!</h2>
-            <p>Your feedback has been submitted successfully.</p>
-            <a href="/" class="btn btn-primary">Back to Surveys</a>
+            <p>Your feedback has been submitted successfully.<br>We truly appreciate your time.</p>
+            <a href="/" class="btn btn-primary">
+                ← Back to Surveys
+            </a>
         </div>
     </div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
+<script>
+    // Progress bar tracking
+    function updateProgress() {
+        const questionBlocks = document.querySelectorAll('.question-block');
+        const total = questionBlocks.length;
+        let answered = 0;
+
+        questionBlocks.forEach(block => {
+            const type = block.dataset.questionType;
+            const id = block.dataset.questionId;
+
+            if (type === 'rating') {
+                if (document.querySelector(`input[name="q${id}"]:checked`)) {
+                    answered++;
+                }
+            } else {
+                const textarea = block.querySelector('textarea');
+                if (textarea && textarea.value.trim()) {
+                    answered++;
+                }
+            }
+        });
+
+        const percent = Math.round((answered / total) * 100);
+        document.getElementById('progressFill').style.width = percent + '%';
+        document.getElementById('progressText').textContent = percent + '% complete';
+    }
+
+    // Track changes
+    document.querySelectorAll('.star-rating input, textarea.form-control').forEach(input => {
+        input.addEventListener('change', updateProgress);
+        input.addEventListener('input', updateProgress);
+    });
+
+    // Character counter for textareas
+    document.querySelectorAll('textarea.form-control').forEach(textarea => {
+        textarea.addEventListener('input', function() {
+            const counter = this.parentElement.querySelector('.char-counter');
+            if (counter) {
+                counter.textContent = this.value.length + '/500';
+            }
+        });
+    });
+</script>
 <script src="/static/js/survey.js"></script>
 {% endblock %}
